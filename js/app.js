@@ -141,7 +141,7 @@ function payNow() {
 
     // Your UPI ID (from user)
     // const UPI_ID = 'mohamedharun76982368@oksbi';
-const UPI_ID = 'ahamedofficial989@okaxis';
+const UPI_ID = 'ifaheem806@okhdfcbank';
 
 
     // Build UPI deep-link (many mobile UPI apps will handle this)
@@ -266,7 +266,7 @@ function confirmPayment() {
     showNotification('Payment confirmed! Order saved.');
 }
 
-// Print bill
+// Show bill preview with download option
 function printBill() {
     const cart = Storage.getCart();
     
@@ -277,108 +277,60 @@ function printBill() {
 
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const now = new Date();
+    const billNo = generateId().substr(0, 8).toUpperCase();
     
-    // Create printable bill content
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Bill - Restaurant</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    padding: 20px;
-                    max-width: 400px;
-                    margin: 0 auto;
-                }
-                .bill-header {
-                    text-align: center;
-                    border-bottom: 2px solid #000;
-                    padding-bottom: 10px;
-                    margin-bottom: 20px;
-                }
-                .bill-header h1 {
-                    margin: 0;
-                    font-size: 24px;
-                }
-                .bill-info {
-                    margin-bottom: 20px;
-                }
-                .bill-items {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                }
-                .bill-items th,
-                .bill-items td {
-                    padding: 8px;
-                    text-align: left;
-                    border-bottom: 1px solid #ddd;
-                }
-                .bill-items th {
-                    background-color: #f4f4f4;
-                }
-                .bill-total {
-                    text-align: right;
-                    font-size: 18px;
-                    font-weight: bold;
-                    margin-top: 20px;
-                    padding-top: 10px;
-                    border-top: 2px solid #000;
-                }
-                .bill-footer {
-                    text-align: center;
-                    margin-top: 30px;
-                    padding-top: 20px;
-                    border-top: 1px solid #ddd;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="bill-header">
-                <h1>RESTAURANT</h1>
-                <p>Thank you for your visit!</p>
-            </div>
-            <div class="bill-info">
-                <p><strong>Date:</strong> ${formatDate(now)}</p>
-                <p><strong>Bill No:</strong> ${generateId().substr(0, 8).toUpperCase()}</p>
-            </div>
-            <table class="bill-items">
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${cart.map(item => `
+    // Create bill preview modal
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.id = 'bill-preview-modal';
+    modal.innerHTML = `
+        <div class="modal-content bill-preview">
+            <span class="close-modal" onclick="closeBillPreview()">&times;</span>
+            <div class="bill-content">
+                <div class="bill-header">
+                    <h1>RESTAURANT</h1>
+                    <p>Thank you for your visit!</p>
+                </div>
+                <div class="bill-info">
+                    <p><strong>Date:</strong> ${formatDate(now)}</p>
+                    <p><strong>Bill No:</strong> ${billNo}</p>
+                </div>
+                <table class="bill-items">
+                    <thead>
                         <tr>
-                            <td>${item.name}</td>
-                            <td>${item.quantity}</td>
-                            <td>${formatPrice(item.price)}</td>
-                            <td>${formatPrice(item.price * item.quantity)}</td>
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Total</th>
                         </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-            <div class="bill-total">
-                <p>Total: ${formatPrice(total)}</p>
+                    </thead>
+                    <tbody>
+                        ${cart.map(item => `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.quantity}</td>
+                                <td>${formatPrice(item.price)}</td>
+                                <td>${formatPrice(item.price * item.quantity)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+                <div class="bill-total">
+                    <p>Total: ${formatPrice(total)}</p>
+                </div>
+                <div class="bill-footer">
+                    <p>Thank you! Visit again!</p>
+                </div>
             </div>
-            <div class="bill-footer">
-                <p>Thank you! Visit again!</p>
+            <div class="bill-actions">
+                <button class="btn btn-secondary" onclick="closeBillPreview()">Close</button>
+                <button class="btn btn-primary" onclick="downloadBillAsPDF()">Download PDF</button>
             </div>
-        </body>
-        </html>
-    `);
-    printWindow.document.close();
-    printWindow.focus();
-    setTimeout(() => {
-        printWindow.print();
-        printWindow.close();
-    }, 250);
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+    modal.style.display = 'flex';
 }
 
 // Initialize cart display on page load
