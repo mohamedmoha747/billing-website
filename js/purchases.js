@@ -15,8 +15,8 @@ function generatePurchaseId() {
     return generateId(); // reuse existing util
 }
 
-function renderPurchases() {
-    const items = getPurchases();
+function renderPurchases(filteredItems = null) {
+    const items = filteredItems || getPurchases();
     const tbody = document.querySelector('#purchases-table tbody');
     if (!tbody) return;
     if (items.length === 0) {
@@ -24,19 +24,23 @@ function renderPurchases() {
         return;
     }
 
-    tbody.innerHTML = items.map(p => `
-        <tr data-id="${p.id}">
-            <td>${p.name}</td>
-            <td>${p.quantity}</td>
-            <td>${formatPrice(p.price)}</td>
-            <td>${p.date}</td>
-            <td>${(p.notes||'')}</td>
-            <td>
-                <button class="btn btn-primary" onclick="editPurchase('${p.id}')">Edit</button>
-                <button class="btn btn-secondary" onclick="deletePurchase('${p.id}')">Delete</button>
-            </td>
-        </tr>
-    `).join('');
+    tbody.innerHTML = items.map(p => {
+        const total = p.quantity * p.price;
+        return `
+            <tr data-id="${p.id}">
+                <td>${p.name}</td>
+                <td>${p.quantity}</td>
+                <td>${formatPrice(p.price)}</td>
+                <td>${formatPrice(total)}</td>
+                <td>${p.date}</td>
+                <td>${(p.notes||'')}</td>
+                <td>
+                    <button class="btn btn-primary" onclick="editPurchase('${p.id}')">Edit</button>
+                    <button class="btn btn-secondary" onclick="deletePurchase('${p.id}')">Delete</button>
+                </td>
+            </tr>
+        `;
+    }).join('');
 }
 
 function resetPurchaseForm() {
@@ -135,6 +139,41 @@ function deletePurchase(id) {
 }
 
 // Initialize form and table on page load
+function filterPurchases() {
+    const filterDate = document.getElementById('filter-date').value;
+    if (!filterDate) {
+        alert('Please select a date to filter');
+        return;
+    }
+
+    const items = getPurchases();
+    const filtered = items.filter(p => p.date === filterDate);
+    renderPurchases(filtered);
+    document.getElementById('date-total').style.display = 'none';
+}
+
+function showTotalForDate() {
+    const filterDate = document.getElementById('filter-date').value;
+    if (!filterDate) {
+        alert('Please select a date to show total');
+        return;
+    }
+
+    const items = getPurchases();
+    const filtered = items.filter(p => p.date === filterDate);
+    const total = filtered.reduce((sum, p) => sum + (p.quantity * p.price), 0);
+
+    document.getElementById('total-date').textContent = filterDate;
+    document.getElementById('total-amount').textContent = formatPrice(total);
+    document.getElementById('date-total').style.display = 'block';
+}
+
+function clearFilter() {
+    document.getElementById('filter-date').value = '';
+    document.getElementById('date-total').style.display = 'none';
+    renderPurchases();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // set default date
     const dateInput = document.getElementById('p-date');

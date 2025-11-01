@@ -31,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             <label for="p-quantity">Quantity</label>
-                            <input id="p-quantity" name="quantity" type="text" min="0.01" step="0.01" placeholder="e.g. 10" required>
+                            <input id="p-quantity" name="quantity" type="number" min="0.01" step="0.01" placeholder="e.g. 10" required>
                         </div>
                         <div class="form-group">
                             <label for="p-price">Price / Rate (₹)</label>
@@ -53,13 +53,30 @@
                 </div>
 
                 <div class="purchase-table-section">
-                    <h2>Purchase Records</h2>
+                    <div class="purchase-header">
+                        <h2>Purchase Records</h2>
+                        <div class="filter-section">
+                            <div class="form-group">
+                                <label for="filter-date">Filter by Date:</label>
+                                <input type="date" id="filter-date">
+                            </div>
+                            <div class="filter-actions">
+                                <button class="btn btn-primary" onclick="filterPurchases()">Filter</button>
+                                <button class="btn btn-primary" onclick="showTotalForDate()">Show Total</button>
+                                <button class="btn btn-secondary" onclick="clearFilter()">Clear</button>
+                            </div>
+                        </div>
+                        <div id="date-total" class="date-total-box" style="display:none">
+                            Total Purchase for <span id="total-date"></span>: <span id="total-amount"></span>
+                        </div>
+                    </div>
                     <table id="purchases-table" class="report-table">
                         <thead>
                             <tr>
                                 <th>Item</th>
                                 <th>Qty</th>
                                 <th>Price</th>
+                                <th>Total</th>
                                 <th>Date</th>
                                 <th>Notes</th>
                                 <th>Actions</th>
