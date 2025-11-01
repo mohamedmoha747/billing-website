@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchases - Restaurant</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Purchases</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Billing</a>
+                <a href="menu-management.html" class="nav-link">Manage Menu</a>
+                <a href="sales-report.html" class="nav-link">Sales Report</a>
+                <a href="purchases.html" class="nav-link active">Purchases</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="purchase-section">
+                <div class="purchase-form-section">
+                    <h2 id="form-title">Add Purchase</h2>
+                    <form id="purchase-form">
+                        <div class="form-group">
+                            <label for="p-item-name">Item name</label>
+                            <input id="p-item-name" name="name" type="text" placeholder="e.g. Chickpeas" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-quantity">Quantity</label>
+                            <input id="p-quantity" name="quantity" type="text" min="0.01" step="0.01" placeholder="e.g. 10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-price">Price / Rate (₹)</label>
+                            <input id="p-price" name="price" type="number" min="0" step="0.01" placeholder="e.g. 200" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-date">Purchase date</label>
+                            <input id="p-date" name="date" type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-notes">Notes (optional)</label>
+                            <textarea id="p-notes" name="notes" rows="2" placeholder="e.g. supplier name or batch"></textarea>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn btn-primary" type="submit">Save Purchase</button>
+                            <button class="btn btn-secondary" type="button" id="p-reset">Reset</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="purchase-table-section">
+                    <h2>Purchase Records</h2>
+                    <table id="purchases-table" class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Notes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- rows added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/purchases.js"></script>
+</body>
+</html>

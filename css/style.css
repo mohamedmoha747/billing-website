@@ -437,6 +437,45 @@ body {
     gap: 1rem;
 }
 
+/* Purchases page styles */
+.purchase-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.purchase-form-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.purchase-table-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.purchase-form-section .form-group {
+    margin-bottom: 0.8rem;
+}
+
+.purchase-form-section input,
+.purchase-form-section textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+@media (max-width: 968px) {
+    .purchase-section {
+        grid-template-columns: 1fr;
+    }
+}
+
 .report-controls label {
     font-weight: 500;
 }
