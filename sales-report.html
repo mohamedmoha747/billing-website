@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Restaurant Billing System</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Billing</a>
+                <a href="menu-management.html" class="nav-link">Manage Menu</a>
+                <a href="sales-report.html" class="nav-link active">Sales Report</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h2>Monthly Sales Report</h2>
+            
+            <div class="report-controls">
+                <label for="month-select">Select Month:</label>
+                <select id="month-select" class="month-select">
+                    <!-- Options will be loaded dynamically -->
+                </select>
+            </div>
+
+            <div id="report-content" class="report-content">
+                <!-- Report will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/sales.js"></script>
+</body>
+</html>
+

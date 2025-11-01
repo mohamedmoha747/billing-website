@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Restaurant Billing System</h1>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Billing</a>
+                <a href="menu-management.html" class="nav-link active">Manage Menu</a>
+                <a href="sales-report.html" class="nav-link">Sales Report</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h2>Menu Management</h2>
+
+            <!-- Add/Edit Form -->
+            <section class="menu-form-section">
+                <h3 id="form-title">Add Menu Item</h3>
+                <form id="menu-form" class="menu-form">
+                    <div class="form-group">
+                        <label for="item-name">Item Name *</label>
+                        <input type="text" id="item-name" required placeholder="e.g., Sandwich">
+                    </div>
+                    <div class="form-group">
+                        <label for="item-price">Price (₹) *</label>
+                        <input type="number" id="item-price" required min="0" step="0.01" placeholder="e.g., 50">
+                    </div>
+                    <div class="form-group">
+                        <label for="item-description">Description</label>
+                        <textarea id="item-description" rows="3" placeholder="Item description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-image">Image URL</label>
+                        <input type="url" id="item-image" placeholder="https://example.com/image.jpg">
+                        <small>Enter any image URL from the web</small>
+                        <div id="image-preview" class="image-preview"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Item</button>
+                </form>
+            </section>
+
+            <!-- Menu Items List -->
+            <section class="menu-list-section">
+                <h3>Menu Items</h3>
+                <div id="menu-management-grid" class="menu-management-grid">
+                    <!-- Menu items will be loaded here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/menu.js"></script>
+</body>
+</html>
+
